@@ -1,0 +1,506 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\wt}{\omega}
+\newcommand{\Lag}{L}
+\newcommand{\Y}{Y}
+\newcommand{\bigo}{\mathcal{O}}
+\DeclareMathOperator{\spanop}{span}
+
+\title{A Generalized Log-Orthogonal Reconstruction Framework for Endpoint Logarithmic Singularities}
+\author{Research note}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note formulates a Gegenbauer-reconstruction-type post-processing framework for functions on $[0,1]$ of the form
+\[
+        f(x)=a(x)+b(x)x^r(-\log x)^k,\qquad r>0,\quad k\in\mathbb{N}_0,
+\]
+where $a$ and $b$ are analytic.  The construction uses the logarithmic map $Y=-\log x$ and generalized log-orthogonal functions (GLOFs).  The presentation deliberately separates two issues: the \emph{regularization error}, namely the error of truncating an exact GLOF expansion, and the \emph{truncation error}, namely the error caused by replacing exact GLOF coefficients by coefficients obtained from standard Chebyshev collocation values or Fourier coefficients.  The regularization mechanism follows from the explicit GLOF estimates of Chen and Shen, while the post-processing theorem in maximum norm requires additional large-parameter estimates analogous to the technical estimates in the Chen--Shu Gegenbauer reconstruction theory.  The final section audits the proof and identifies precisely which parts are already justified and which parts remain the central new mathematical work.
+\end{abstract}
+
+\section{Model problem and decomposition}
+
+We consider
+\begin{equation}\label{eq:model}
+    f(x)=a(x)+b(x)x^r(-\log x)^k,
+    \qquad x\in(0,1],\qquad r>0,
+    \qquad k\in\mathbb{N}_0,
+\end{equation}
+where $a$ and $b$ are analytic in a complex neighbourhood of $[0,1]$.  Since $x^r(-\log x)^k\to0$ as $x\to0^+$, the endpoint value is $f(0)=a(0)$.  Let
+\[
+    a_0=a(0),\qquad a_1(x)=\frac{a(x)-a(0)}{x}.
+\]
+Then $a_1$ is analytic and
+\begin{equation}\label{eq:decomp}
+    f(x)=a_0+u_1(x)+u_r(x),
+    \qquad
+    u_1(x)=x a_1(x),
+    \qquad
+    u_r(x)=x^r(-\log x)^k b(x).
+\end{equation}
+Thus it is enough to analyze building blocks
+\begin{equation}\label{eq:block}
+    u_\theta(x)=x^\theta(-\log x)^\kappa c(x),
+    \qquad \theta>0,
+    \qquad \kappa\in\mathbb{N}_0,
+\end{equation}
+with analytic $c$.  For $u_1$ one has $(\theta,\kappa,c)=(1,0,a_1)$, and for $u_r$ one has $(\theta,\kappa,c)=(r,k,b)$.
+
+\begin{assumption}[analytic coefficient model]\label{ass:analytic}
+There exist constants $C_c>0$ and $\rho>1$ such that the Taylor coefficients of $c$ at the origin satisfy
+\[
+    c(x)=\sum_{j=0}^\infty c_j x^j,
+    \qquad |c_j|\le C_c\rho^{-j}.
+\]
+Equivalently, $c$ is analytic in a disk of radius larger than one after a harmless rescaling of the interval if needed.
+\end{assumption}
+
+\section{The logarithmic map and tuned GLOFs}
+
+Let
+\begin{equation}\label{eq:logmap}
+    Y=-\log x,
+    \qquad x=e^{-Y},
+    \qquad Y\in[0,\infty).
+\end{equation}
+For parameters $A>-1$, $B>-1$ and $\Lambda\in\mathbb{R}$, the GLOFs of Chen and Shen are
+\begin{equation}\label{eq:glof-general}
+    S_n^{(A,B,\Lambda)}(x)
+    =x^{(B-\Lambda)/2}\Lag_n^{(A)}((B+1)Y),
+    \qquad n=0,1,2,\ldots,
+\end{equation}
+where $\Lag_n^{(A)}$ is the generalized Laguerre polynomial.  They satisfy the orthogonality relation
+\begin{equation}\label{eq:glof-orth}
+    \int_0^1
+    S_n^{(A,B,\Lambda)}(x)S_m^{(A,B,\Lambda)}(x)
+    Y^A x^\Lambda\dd x
+    =h_n^{(A,B)}\delta_{mn},
+\end{equation}
+where
+\begin{equation}\label{eq:hn}
+    h_n^{(A,B)}=\frac{\Gamma(n+A+1)}{(B+1)^{A+1}\Gamma(n+1)}.
+\end{equation}
+
+To capture a block $x^\theta(-\log x)^\kappa c(x)$, tune the GLOF parameter by
+\begin{equation}\label{eq:tunedlambda}
+    \Lambda_\theta=B-2\theta.
+\end{equation}
+Then the basis functions become
+\begin{equation}\label{eq:tunedbasis}
+    \Phi_{n}^{(\theta;A,B)}(x)
+    :=S_n^{(A,B,B-2\theta)}(x)
+    =x^\theta\Lag_n^{(A)}((B+1)Y),
+\end{equation}
+with the corresponding orthogonality weight
+\begin{equation}\label{eq:tunedweight}
+    \omega_\theta^{(A,B)}(x)=Y^A x^{B-2\theta}.
+\end{equation}
+The exact GLOF projection of $u_\theta$ is
+\begin{equation}\label{eq:exactproj}
+    P_m^{(\theta;A,B)}u_\theta(x)
+    =\sum_{n=0}^m \widehat u_{\theta,n}^{(A,B)}\Phi_n^{(\theta;A,B)}(x),
+\end{equation}
+where
+\begin{equation}\label{eq:exactcoef}
+    \widehat u_{\theta,n}^{(A,B)}
+    =\frac{1}{h_n^{(A,B)}}
+    \int_0^1
+    u_\theta(x)\Phi_n^{(\theta;A,B)}(x)
+    \omega_\theta^{(A,B)}(x)\dd x .
+\end{equation}
+
+\begin{remark}[why GLOFs rather than LOFs]
+The log-orthogonal functions without the prefactor $x^\theta$ are polynomials in $Y=-\log x$ and usually grow as $x\to0^+$.  They are natural in weighted $L^2$ spaces but are not appropriate for a maximum-norm reconstruction at the singular endpoint.  The tuned GLOFs \eqref{eq:tunedbasis} satisfy $x^\theta Y^n\to0$ as $x\to0^+$ for every $\theta>0$, hence they are endpoint-bounded.  The constant term $a_0$ in \eqref{eq:decomp} must therefore be added separately.
+\end{remark}
+
+\section{Reconstruction from standard spectral data}
+
+The ideal componentwise postprocessor assumes that the block $u_\theta$ is available.  This is the cleanest setting for analysis and is the direct analogue of the coefficient-level argument in the Gegenbauer reconstruction theory.  A practical data-only method is given later as an enriched least-squares method.
+
+\subsection{Fourier-coefficient version}
+
+Assume that the first $2N+1$ Fourier coefficients of $u_\theta$ are given and define
+\begin{equation}\label{eq:fourier-partial}
+    u_{\theta,N}(x)=\sum_{|\ell|\le N}\widetilde u_{\theta,\ell}e^{2\pi i\ell x}.
+\end{equation}
+The postprocessed GLOF coefficients are
+\begin{equation}\label{eq:fourier-gcoef}
+    g_{\theta,n}^{(A,B,N)}
+    =\frac{1}{h_n^{(A,B)}}
+    \int_0^1
+    u_{\theta,N}(x)\Phi_n^{(\theta;A,B)}(x)
+    \omega_\theta^{(A,B)}(x)\dd x .
+\end{equation}
+The reconstructed block is
+\begin{equation}\label{eq:fourier-recon}
+    R_{N,m}^{(\theta;A,B)}u_\theta(x)
+    =\sum_{n=0}^{m} g_{\theta,n}^{(A,B,N)}\Phi_n^{(\theta;A,B)}(x).
+\end{equation}
+
+\subsection{Collocation-value version}
+
+Assume that values of $u_\theta$ are known at standard collocation points, for example Chebyshev points on $[0,1]$.  Let $I_N$ be the corresponding interpolation operator.  A coefficient-level analogue of Chen--Shu's collocation postprocessor is to interpolate a weighted integrand rather than the singular function itself.  One possible formulation is
+\begin{equation}\label{eq:colloc-weighted-function}
+    H_\theta^{(A,B)}(x)=x^{B-\theta}Y^A u_\theta(x),
+\end{equation}
+so that
+\begin{equation}\label{eq:colloc-gcoef}
+    g_{\theta,n}^{(A,B,N)}
+    =\frac{1}{h_n^{(A,B)}}
+    \int_0^1
+    I_NH_\theta^{(A,B)}(x)
+    \Lag_n^{(A)}((B+1)Y)\dd x.
+\end{equation}
+For Chebyshev collocation, one may often set $A=0$ and use the high-order zero $x^B$ at $x=0$ to regularize the logarithmic singularity.  For Fourier collocation on a periodic grid, a positive $A$ growing with $N$ is typically needed to suppress the artificial periodic mismatch at $x=1$ because $Y^A\sim(1-x)^A$ there.
+
+\section{Error decomposition}
+
+For a block $u_\theta$, write
+\begin{align}\label{eq:error-split}
+    u_\theta-R_{N,m}^{(\theta;A,B)}u_\theta
+    &=
+    \underbrace{u_\theta-P_m^{(\theta;A,B)}u_\theta}_{\text{regularization error}}
+    +
+    \underbrace{P_m^{(\theta;A,B)}u_\theta-R_{N,m}^{(\theta;A,B)}u_\theta}_{\text{truncation error}}.
+\end{align}
+Thus
+\begin{equation}\label{eq:error-split-norm}
+    \|u_\theta-R_{N,m}^{(\theta;A,B)}u_\theta\|_X
+    \le
+    \cR_m^{(\theta;A,B)}(u_\theta;X)
+    +\cT_{N,m}^{(\theta;A,B)}(u_\theta;X),
+\end{equation}
+where $X$ may be a weighted $L^2$ norm or, under additional stability estimates, $L^\infty(0,1)$.
+
+\section{Regularization error}
+
+The regularization error is the part most directly supported by the approximation theory of Chen and Shen.  The key mechanism is explicit and can be seen from a single monomial.
+
+\begin{lemma}[monomial coefficient mechanism]\label{lem:monomial-mechanism}
+Let
+\[
+    v_{\theta,j,\kappa}(x)=x^{\theta+j}Y^\kappa,
+    \qquad j\in\mathbb{N}_0.
+\]
+Use the tuned GLOF basis \eqref{eq:tunedbasis} with $\Lambda_\theta=B-2\theta$.  Then the Laguerre transform of $v_{\theta,j,\kappa}$ contains the geometric factor
+\begin{equation}\label{eq:Rj}
+    R_j(B)=\frac{j}{j+B+1}.
+\end{equation}
+In particular, the leading singular term $x^\theta Y^\kappa$ corresponds to $j=0$ and is represented exactly once $m\ge\kappa$.
+\end{lemma}
+
+\begin{proof}
+Using $z=(B+1)Y$ and $x=e^{-Y}$, the coefficient integral for $v_{\theta,j,\kappa}$ is proportional to
+\[
+    \int_0^\infty z^{A+\kappa}
+    \exp\left[-\left(1+\frac{j}{B+1}\right)z\right]
+    \Lag_n^{(A)}(z)\dd z.
+\]
+The standard Laguerre identity used by Chen and Shen gives a factor
+\[
+    \left(\frac{s-1}{s}\right)^n,
+    \qquad s=1+\frac{j}{B+1},
+\]
+which is exactly $R_j(B)^n$.  If $j=0$, the integrand is $z^{A+\kappa}e^{-z}$ times a polynomial of degree $\kappa$; by Laguerre orthogonality all coefficients with $n>\kappa$ vanish.
+\end{proof}
+
+\begin{theorem}[componentwise regularization, fixed Laguerre index]\label{thm:regularization-fixedA}
+Let $u_\theta$ be given by \eqref{eq:block} and assume Assumption \ref{ass:analytic}.  Fix $A>-1$ and choose
+\begin{equation}\label{eq:params-reg}
+    B_N=bN,
+    \qquad m_N=\gamma N,
+    \qquad b>0,
+    \qquad \gamma>0.
+\end{equation}
+Then there exist constants $C>0$, $p\ge0$ and $0<q_R<1$, independent of $N$, such that
+\begin{equation}\label{eq:reg-exp}
+    \|u_\theta-P_{m_N}^{(\theta;A,B_N)}u_\theta\|_{L^2_{\omega_\theta^{(A,B_N)}}(0,1)}
+    \le C N^p q_R^N.
+\end{equation}
+One may take, up to polynomial factors,
+\begin{equation}\label{eq:qRsimple}
+    q_R=\max\left\{(1+b)^{-\gamma},\rho^{-1}\right\}<1.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Expand $c(x)=\sum_{j=0}^\infty c_jx^j$.  By Lemma \ref{lem:monomial-mechanism}, the tail of the GLOF expansion of the $j$th term contains the factor $R_j(B_N)^{m_N}$, up to powers of $m_N$ depending on $A$ and $\kappa$.  Hence the regularization tail is bounded by a polynomial in $N$ times
+\[
+    \sum_{j=0}^\infty |c_j|\left(\frac{j}{j+B_N+1}\right)^{m_N}.
+\]
+Split the sum into $0\le j\le N$ and $j>N$.  For $j\le N$,
+\[
+    \frac{j}{j+B_N+1}\le \frac{1}{1+b+1/N}\le \frac{1}{1+b},
+\]
+so this part is bounded by a polynomial times $(1+b)^{-\gamma N}$.  For $j>N$, use the trivial bound $R_j(B_N)^{m_N}\le1$ and Assumption \ref{ass:analytic} to obtain
+\[
+    \sum_{j>N}|c_j|\le C\rho^{-N}.
+\]
+Combining both estimates proves \eqref{eq:reg-exp}.
+\end{proof}
+
+\begin{remark}[large $A$]
+Theorem \ref{thm:regularization-fixedA} is stated for fixed $A$.  This is sufficient for many Chebyshev-collocation experiments because $Y^k=(-\log x)^k$ is analytic at $x=1$ when $k$ is an integer, while the factor $x^{B_N}$ regularizes the singular endpoint $x=0$.  A Fourier-periodic reconstruction over $[0,1]$ generally needs $A=A_N\simeq aN$ to suppress the endpoint $x=1$.  The fixed-parameter estimates of Chen and Shen cannot be invoked verbatim in that large-$A$ regime; a separate large-parameter GLOF regularization estimate is required.  This is one of the main new theoretical tasks.
+\end{remark}
+
+\section{Truncation error: Fourier coefficients}
+
+We now review the Fourier truncation argument, which is the closest analogue of Chen--Shu's Fourier-Galerkin analysis.  Define the testing function
+\begin{equation}\label{eq:Mtest}
+    M_{\theta,n}^{(A,B)}(x)
+    =\Phi_n^{(\theta;A,B)}(x)\omega_\theta^{(A,B)}(x)
+    =x^{B-\theta}Y^A\Lag_n^{(A)}((B+1)Y).
+\end{equation}
+Then, from \eqref{eq:exactcoef} and \eqref{eq:fourier-gcoef},
+\begin{equation}\label{eq:coefdiff-fourier}
+    \widehat u_{\theta,n}^{(A,B)}-g_{\theta,n}^{(A,B,N)}
+    =\frac{1}{h_n^{(A,B)}}
+    \sum_{|\ell|>N}\widetilde u_{\theta,\ell}
+    \int_0^1e^{2\pi i\ell x}M_{\theta,n}^{(A,B)}(x)\dd x.
+\end{equation}
+
+\begin{lemma}[integration-by-parts reduction]\label{lem:ibp}
+Assume $s$ is a positive integer satisfying
+\begin{equation}\label{eq:s-condition}
+    s<B-\theta,
+    \qquad s<A,
+\end{equation}
+so that all boundary terms up to order $s-1$ vanish at $x=0$ and $x=1$.  Then
+\begin{equation}\label{eq:ibp-bound}
+    \left|
+    \int_0^1e^{2\pi i\ell x}M_{\theta,n}^{(A,B)}(x)\dd x
+    \right|
+    \le
+    \frac{1}{(2\pi |\ell|)^s}
+    \left\|\frac{\dd^s}{\dd x^s}M_{\theta,n}^{(A,B)}\right\|_{L^1(0,1)}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+As $x\to0^+$,
+\[
+    M_{\theta,n}^{(A,B)}(x)=\bigo\left(x^{B-\theta}Y^{A+n}\right),
+\]
+so the boundary terms at $0$ vanish up to order $s-1$ if $s<B-\theta$.  As $x\to1^-$, $Y=-\log x\sim1-x$, and therefore
+\[
+    M_{\theta,n}^{(A,B)}(x)=\bigo\left((1-x)^A\right),
+\]
+so the boundary terms at $1$ vanish up to order $s-1$ if $s<A$.  Applying integration by parts $s$ times gives \eqref{eq:ibp-bound}.
+\end{proof}
+
+The following estimate is the exact analogue of the most technical Chen--Shu truncation lemmas.  It is stated as an assumption because it is not a direct corollary of the fixed-parameter GLOF theory.
+
+\begin{assumption}[large-parameter GLOF derivative bound]\label{ass:large-derivative}
+Let
+\begin{equation}\label{eq:linear-params}
+    A_N=aN,
+    \qquad B_N=bN,
+    \qquad m_N=\gamma N,
+    \qquad s_N=\tau N,
+\end{equation}
+with $a,b,\gamma,\tau>0$ and $\tau<\min\{a,b\}$.  There exist constants $C>0$, $p\ge0$, and $C_T>0$ independent of $N$ such that, for all $0\le n\le m_N$,
+\begin{equation}\label{eq:large-derivative-bound}
+    \left\|\frac{\dd^{s_N}}{\dd x^{s_N}}M_{\theta,n}^{(A_N,B_N)}\right\|_{L^1(0,1)}
+    \le
+    C N^p\bigl[C_T(a+b+\gamma)N\bigr]^{s_N}
+    \bigl(h_n^{(A_N,B_N)}\bigr)^{1/2}.
+\end{equation}
+\end{assumption}
+
+\begin{proposition}[Fourier truncation error under Assumption \ref{ass:large-derivative}]\label{prop:fourier-trunc}
+Suppose $u_\theta\in L^2(0,1)$, so its Fourier coefficients are bounded.  Under Assumption \ref{ass:large-derivative}, if
+\begin{equation}\label{eq:qT-condition}
+    q_T:=\left(\frac{C_T(a+b+\gamma)}{2\pi}\right)^\tau<1,
+\end{equation}
+then
+\begin{equation}\label{eq:fourier-trunc-exp}
+    \cT_{N,m_N}^{(\theta;A_N,B_N)}(u_\theta;X)
+    \le C N^p q_T^N
+\end{equation}
+for the coefficient-induced norm $X$ associated with the finite GLOF sum.  If a corresponding inverse or stability estimate from the coefficient norm to $L^\infty(0,1)$ is available, the same exponential factor holds in maximum norm up to a polynomial factor.
+\end{proposition}
+
+\begin{proof}
+Insert \eqref{eq:ibp-bound} and \eqref{eq:large-derivative-bound} into \eqref{eq:coefdiff-fourier}.  Since $|\widetilde u_{\theta,\ell}|\le C$ and $s_N>1$,
+\[
+    \sum_{|\ell|>N}|\ell|^{-s_N}\le C N^{1-s_N}.
+\]
+Thus each coefficient error is bounded by a polynomial times
+\[
+    \left(\frac{C_T(a+b+\gamma)N}{2\pi N}\right)^{s_N}
+    =\left(\frac{C_T(a+b+\gamma)}{2\pi}\right)^{\tau N}
+    =q_T^N.
+\]
+Summing over $0\le n\le m_N=\gamma N$ only changes the polynomial factor.
+\end{proof}
+
+\section{Truncation error: collocation values}
+
+For collocation data, the same philosophy is to multiply the singular data by an $N$-dependent endpoint factor before interpolation.  For a component $u_\theta=x^\theta Y^\kappa c(x)$, a natural weighted object is
+\begin{equation}\label{eq:Hcolloc}
+    H_{\theta}^{(A,B)}(x)=x^{B-\theta}Y^A u_\theta(x)
+    =x^B Y^{A+\kappa}c(x).
+\end{equation}
+If $B\simeq bN$, this has an $O(N)$-order zero at $x=0$.  If $A\simeq aN$, it also has an $O(N)$-order zero at $x=1$ because $Y\sim1-x$; this is important for Fourier collocation.  For Chebyshev collocation, one may often take $A=0$ when $k$ is an integer.
+
+A Chen--Shu-type collocation proof requires a derivative estimate of the form
+\begin{equation}\label{eq:colloc-derivative-bound}
+    \|\partial_x^s H_{\theta}^{(A,B)}\|_{L^\infty(0,1)}
+    \le C N^p [C_C(a+b)N]^s,
+    \qquad s=\tau N,
+\end{equation}
+and then the standard interpolation estimate gives
+\begin{equation}\label{eq:colloc-interp-bound}
+    \|H_{\theta}^{(A,B)}-I_NH_{\theta}^{(A,B)}\|
+    \le C N^p [C_C(a+b)]^{\tau N}.
+\end{equation}
+Thus the collocation truncation error is exponentially small if $C_C(a+b)<1$.  The main technical point is that the subsequent integration against $\Lag_n^{(A)}((B+1)Y)$ must be bounded in a norm compatible with GLOF orthogonality.  This is the collocation analogue of Assumption \ref{ass:large-derivative}.
+
+\section{Conditional reconstruction theorem}
+
+\begin{theorem}[componentwise GLOF postprocessing, conditional form]\label{thm:main-conditional}
+Let $u_\theta$ be a block of the form \eqref{eq:block}.  Suppose that the regularization estimate
+\begin{equation}\label{eq:assumed-reg}
+    \cR_{m_N}^{(\theta;A_N,B_N)}(u_\theta;X)
+    \le C N^p q_R^N,
+    \qquad 0<q_R<1,
+\end{equation}
+and the truncation estimate
+\begin{equation}\label{eq:assumed-trunc}
+    \cT_{N,m_N}^{(\theta;A_N,B_N)}(u_\theta;X)
+    \le C N^p q_T^N,
+    \qquad 0<q_T<1,
+\end{equation}
+hold in a norm $X$.  Then
+\begin{equation}\label{eq:main-block}
+    \|u_\theta-R_{N,m_N}^{(\theta;A_N,B_N)}u_\theta\|_X
+    \le C N^p(q_R^N+q_T^N).
+\end{equation}
+Consequently, if the decomposition \eqref{eq:decomp} is available componentwise, then
+\begin{equation}\label{eq:main-f}
+    \left\|f-a_0-R_{N,m_1}^{(1;A_1,B_1)}u_1-R_{N,m_r}^{(r;A_r,B_r)}u_r\right\|_X
+    \le C N^p q^N,
+\end{equation}
+for some $0<q<1$.
+\end{theorem}
+
+\begin{proof}
+The block estimate \eqref{eq:main-block} is exactly the triangle inequality \eqref{eq:error-split-norm}.  The full estimate \eqref{eq:main-f} follows by applying \eqref{eq:main-block} to the two blocks $u_1$ and $u_r$ and absorbing the finite sum of exponential terms into a single exponential factor.
+\end{proof}
+
+\section{Data-only enriched GLOF reconstruction}
+
+The componentwise theory above assumes access to $u_1$ and $u_r$.  In practice one is usually given only values or Fourier coefficients of $f$.  A practical data-only method is therefore to use the enriched reconstruction space
+\begin{equation}\label{eq:enriched-space}
+    \cV_N
+    =\spanop\{1\}
+    \oplus\spanop\{\Phi_n^{(1;A_1,B_1)}:0\le n\le m_1\}
+    \oplus\spanop\{\Phi_n^{(r;A_r,B_r)}:0\le n\le m_r\}.
+\end{equation}
+Given sample points $\{x_j\}_{j=0}^{J}$ and data $d_j\approx f(x_j)$, solve the scaled least-squares problem
+\begin{equation}\label{eq:lsq}
+    \min_{\mathbf c}\left\|W(A\mathbf c-\mathbf d)\right\|_2,
+\end{equation}
+where the columns of $A$ are the basis functions in \eqref{eq:enriched-space} evaluated at the sample points, and $W$ is a quadrature or user-chosen stabilization weight.  The output is
+\begin{equation}\label{eq:data-only-recon}
+    R_N^{\rm LS}f(x)=c_0+
+    \sum_{n=0}^{m_1}c_{1,n}\Phi_n^{(1;A_1,B_1)}(x)
+    +\sum_{n=0}^{m_r}c_{r,n}\Phi_n^{(r;A_r,B_r)}(x).
+\end{equation}
+
+\begin{remark}[additional stability requirement]
+The enriched least-squares method avoids explicit recovery of $a_1$ and $b$, but its proof requires a stability estimate for the sampling matrix $A$, uniformly in $N$.  Numerically, this means column scaling, oversampling, and QR or SVD solvers are essential.  The stability of \eqref{eq:lsq} is a separate question from the regularization and truncation estimates above.
+\end{remark}
+
+\section{Algorithmic framework}
+
+The following high-level procedure is suitable for either manufactured tests or postprocessing data generated by a standard spectral solver.
+
+\begin{enumerate}[label=\textbf{Step \arabic*.},leftmargin=2.5em]
+\item Choose a data size $N$ and compute standard spectral data for $f$: either Chebyshev collocation values or Fourier coefficients.  Plot the standard partial sum to verify endpoint oscillations or loss of spectral accuracy.
+\item Choose reconstruction parameters.  A typical starting point is
+\[
+    B_N=bN,
+    \qquad m_N=\gamma N,
+    \qquad 0<\gamma<b,
+\]
+with $A=0$ for Chebyshev experiments and $A=aN$ for Fourier-periodic experiments requiring endpoint suppression at $x=1$.
+\item Construct the enriched GLOF dictionary \eqref{eq:enriched-space}.  For $x=0$, set $\Phi_n^{(\theta)}(0)=0$ for $\theta>0$ and keep the separate constant basis.
+\item Obtain reconstruction coefficients.  In manufactured tests, one may reconstruct $u_1$ and $u_r$ componentwise by the projection formulas.  In data-only tests, solve the scaled least-squares problem \eqref{eq:lsq}.
+\item Evaluate the reconstruction on a dense grid and compare with the exact $f$ if available.  Report $L^\infty$ errors, weighted $L^2$ errors, condition numbers, and the dependence on $A,B,m,N$.
+\end{enumerate}
+
+\section{Proof audit}
+
+This section records the status of the critical arguments.
+
+\subsection*{Validated components}
+
+\begin{enumerate}[label=(\roman*),leftmargin=2.5em]
+\item The GLOF definitions, orthogonality, quadrature nodes and pseudo-derivative framework are established in the Chen--Shen theory.
+\item The tuning $\Lambda_\theta=B-2\theta$ is algebraically correct: it turns the GLOF basis into $x^\theta$ times Laguerre polynomials in $Y=-\log x$.
+\item Lemma \ref{lem:monomial-mechanism} gives the correct regularization factor $R_j(B)=j/(j+B+1)$.  The leading singular term $x^\theta Y^\kappa$ is exactly captured by finitely many modes.
+\item The regularization estimate for fixed $A$ and $B_N\simeq N$ follows from the explicit Laguerre coefficient mechanism and analyticity of $c$.
+\item The Fourier truncation proof reduces rigorously to a large-parameter derivative estimate for $M_{\theta,n}^{(A,B)}$ via integration by parts.
+\end{enumerate}
+
+\subsection*{Open technical points}
+
+\begin{enumerate}[label=(\roman*),leftmargin=2.5em]
+\item The estimate \eqref{eq:large-derivative-bound} is the central missing lemma.  It is the GLOF analogue of the derivative estimates in the Chen--Shu truncation analysis.
+\item If $A=A_N\simeq N$ is used, the fixed-parameter GLOF approximation theorem of Chen and Shen is not sufficient by itself.  A large-$A$ regularization estimate must be proved.
+\item A maximum-norm theorem requires an inverse or stability estimate converting coefficient or weighted $L^2$ bounds into $L^\infty(0,1)$ bounds for the finite GLOF expansion.
+\item The direct componentwise theory assumes that the decomposition $f=a_0+u_1+u_r$ is available.  A purely data-driven method must use the enriched space \eqref{eq:enriched-space}; its proof requires uniform sampling stability of the least-squares matrix.
+\item A bare LOF basis should not be used for endpoint-uniform reconstruction because its modes grow like powers of $-\log x$ at $x=0$.  The GLOF prefactor and the separate constant mode are essential.
+\end{enumerate}
+
+\section{Conclusion}
+
+A GLOF reconstruction framework for logarithmic endpoint singularities is mathematically natural and potentially useful as a postprocessor for standard Chebyshev or Fourier spectral data.  The regularization mechanism is strong: after the tuning $\Lambda_\theta=B-2\theta$, the singular factor $x^\theta(-\log x)^\kappa$ is captured exactly up to degree $\kappa$, and analytic corrections are damped by the factor $j/(j+B+1)$.  The main research challenge is not this regularization step but the truncation step: one must prove large-parameter derivative and stability estimates that play the role of the Chen--Shu Gegenbauer estimates.  Once these estimates are established, the usual decomposition into truncation and regularization errors yields exponential recovery.
+
+\begin{thebibliography}{9}
+
+\bibitem{ChenShu2014}
+Z. Chen and C.-W. Shu,
+\newblock Recovering exponential accuracy from collocation point values of smooth functions with end-point singularities,
+\newblock \emph{Journal of Computational and Applied Mathematics}, 265 (2014), 83--95.
+
+\bibitem{ChenShu2015}
+Z. Chen and C.-W. Shu,
+\newblock Recovering exponential accuracy in Fourier spectral methods involving piecewise smooth functions with unbounded derivative singularities,
+\newblock \emph{Journal of Scientific Computing}, 65 (2015), 1145--1165.
+
+\bibitem{ChenShen2022}
+S. Chen and J. Shen,
+\newblock Log orthogonal functions: approximation properties and applications,
+\newblock \emph{IMA Journal of Numerical Analysis}, 42 (2022), 712--743.
+
+\end{thebibliography}
+
+\end{document}

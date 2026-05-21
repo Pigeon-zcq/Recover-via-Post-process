@@ -1,0 +1,1045 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{geometry}
+\geometry{a4paper,margin=1in}
+
+\newtheorem{assumption}{假设}
+\newtheorem{definition}{定义}
+\newtheorem{lemma}{引理}
+\newtheorem{proposition}{命题}
+\newtheorem{theorem}{定理}
+\newtheorem{remark}{注}
+
+\DeclareMathOperator{\spanop}{span}
+\DeclareMathOperator{\dist}{dist}
+
+\begin{document}
+%============================================================
+% Fourier--GLOF post-processing: weighted L2 error estimate
+%============================================================
+
+% Suggested packages:
+% \usepackage{amsmath,amssymb,amsthm}
+%
+% Suggested theorem environments:
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{lemma}{Lemma}
+% \newtheorem{proposition}{Proposition}
+% \newtheorem{assumption}{Assumption}
+% \newtheorem{remark}{Remark}
+
+\section{A weighted $L^2$ estimate for Fourier--GLOF post-processing}
+
+Throughout this section, let
+\[
+    I=(0,1),\qquad L(x):=-\log x .
+\]
+For $\alpha>-1$ and $\lambda>-1$, define the weighted inner product
+\[
+    (u,v)_{\alpha,\lambda}
+    :=
+    \int_0^1 u(x)\overline{v(x)}
+    \chi_{\alpha,\lambda}(x)\,dx,
+    \qquad
+    \chi_{\alpha,\lambda}(x):=L(x)^\alpha x^\lambda,
+\]
+and the corresponding norm
+\[
+    \|u\|_{\alpha,\lambda}
+    :=
+    (u,u)_{\alpha,\lambda}^{1/2}.
+\]
+
+Let $\alpha,\beta>-1$ and $\lambda>-1$. The generalized log orthogonal functions
+are defined by
+\[
+    \mathcal S_n^{(\alpha,\beta,\lambda)}(x)
+    :=
+    x^{\frac{\beta-\lambda}{2}}
+    L_n^{(\alpha)}\bigl((\beta+1)L(x)\bigr),
+    \qquad n=0,1,2,\dots,
+\]
+where $L_n^{(\alpha)}$ is the Laguerre polynomial of degree $n$.
+These functions satisfy
+\[
+    \int_0^1
+    \mathcal S_n^{(\alpha,\beta,\lambda)}(x)
+    \mathcal S_m^{(\alpha,\beta,\lambda)}(x)
+    \chi_{\alpha,\lambda}(x)\,dx
+    =
+    \gamma_n^{(\alpha,\beta)}\delta_{mn},
+\]
+where
+\[
+    \gamma_n^{(\alpha,\beta)}
+    =
+    \frac{\Gamma(n+\alpha+1)}
+    {(\beta+1)^{\alpha+1}\Gamma(n+1)}.
+\]
+
+Let
+\[
+    V_M^{\alpha,\beta,\lambda}
+    :=
+    \operatorname{span}
+    \left\{
+    \mathcal S_0^{(\alpha,\beta,\lambda)},
+    \mathcal S_1^{(\alpha,\beta,\lambda)},
+    \dots,
+    \mathcal S_M^{(\alpha,\beta,\lambda)}
+    \right\}.
+\]
+The weighted $L^2$-orthogonal projection
+\[
+    \pi_M^{\alpha,\beta,\lambda}
+    :
+    L^2_{\chi_{\alpha,\lambda}}(0,1)
+    \longrightarrow
+    V_M^{\alpha,\beta,\lambda}
+\]
+is given by
+\[
+    \pi_M^{\alpha,\beta,\lambda}u
+    =
+    \sum_{n=0}^M
+    \widehat u_n^{\alpha,\beta,\lambda}
+    \mathcal S_n^{(\alpha,\beta,\lambda)},
+\]
+where
+\[
+    \widehat u_n^{\alpha,\beta,\lambda}
+    =
+    \frac{1}{\gamma_n^{(\alpha,\beta)}}
+    \int_0^1
+    u(x)
+    \mathcal S_n^{(\alpha,\beta,\lambda)}(x)
+    \chi_{\alpha,\lambda}(x)\,dx .
+\]
+
+We consider
+\[
+    f(x)=a(x)+b(x)x^rL(x)^k,
+    \qquad r>0,\qquad k\in\mathbb N.
+\]
+Let the Fourier partial sum of $f$ be
+\[
+    f_N^{\rm F}(x)
+    =
+    \sum_{|\ell|\le N}c_\ell e^{2\pi i\ell x},
+    \qquad
+    c_\ell
+    =
+    \int_0^1 f(x)e^{-2\pi i\ell x}\,dx .
+\]
+
+%------------------------------------------------------------
+\subsection{Assumptions}
+
+\begin{assumption}[Basic regularity of the data]
+\label{ass:data}
+Assume that $a,b$ are analytic in a neighbourhood of $[0,1]$.
+In particular,
+\[
+    f\in W^{1,1}(0,1).
+\]
+Define
+\[
+    B_f
+    :=
+    \frac{
+    |f(1)-f(0)|+\|f'\|_{L^1(0,1)}
+    }{2\pi}.
+\]
+\end{assumption}
+
+Under Assumption~\ref{ass:data}, integration by parts gives, for every
+$\ell\ne 0$,
+\[
+    |c_\ell|
+    \le
+    \frac{B_f}{|\ell|}.
+\]
+
+\begin{assumption}[Weighted $L^2$ GLOF regularization]
+\label{ass:regularization}
+Assume that there exists a known sequence $\mathcal R_M$ such that
+\[
+    \|f-\pi_M^{\alpha,\beta,\lambda}f\|_{\alpha,\lambda}
+    \le
+    \mathcal R_M.
+\]
+In applications one typically aims to prove
+\[
+    \mathcal R_M
+    \le
+    C_{\rm reg} M^{s_{\rm reg}}q_{\rm reg}^M,
+    \qquad
+    0<q_{\rm reg}<1.
+\]
+\end{assumption}
+
+The role of Assumption~\ref{ass:regularization} is to isolate the
+regularization part of the proof. It is the part supplied by the
+GLOF approximation theory. For example, it is verified for finite
+linear combinations of the model singular functions
+$x^p(-\log x)^j$ by the single-term GLOF estimate stated below.
+
+%------------------------------------------------------------
+\subsection{A sufficient condition for the regularization estimate}
+
+\begin{lemma}[Single-term GLOF projection estimate]
+\label{lem:single-term}
+Let
+\[
+    g_{p,j}(x):=x^pL(x)^j,
+    \qquad p\ge 0,\qquad j\in\mathbb N_0.
+\]
+Assume
+\[
+    \beta>\lambda,
+    \qquad
+    \lambda>-1-2p.
+\]
+Define
+\[
+    R_p^{\alpha,\beta,\lambda}
+    :=
+    \left|
+    \frac{2p+\lambda-\beta}
+    {2p+2+\lambda+\beta}
+    \right|.
+\]
+Then
+\[
+    R_p^{\alpha,\beta,\lambda}<1,
+\]
+and for all sufficiently large $M$,
+\[
+    \left\|
+    g_{p,j}
+    -
+    \pi_M^{\alpha,\beta,\lambda}g_{p,j}
+    \right\|_{\alpha,\lambda}
+    \le
+    C_{p,j,\alpha,\beta,\lambda}
+    M^{\frac{\alpha+1}{2}+j}
+    \left(R_p^{\alpha,\beta,\lambda}\right)^M .
+\]
+\end{lemma}
+
+\begin{proposition}[Regularization for finite singular expansions]
+\label{prop:finite-reg}
+Suppose that
+\[
+    a(x)=\sum_{j=0}^{J_a}a_jx^j,
+    \qquad
+    b(x)=\sum_{j=0}^{J_b}b_jx^j .
+\]
+Assume
+\[
+    \beta>\lambda,
+    \qquad
+    \lambda>-1.
+\]
+Define the finite set of exponents
+\[
+    \mathcal P
+    :=
+    \{0,1,\dots,J_a\}
+    \cup
+    \{r,r+1,\dots,r+J_b\},
+\]
+and
+\[
+    \rho_{\rm reg}
+    :=
+    \max_{p\in\mathcal P}
+    R_p^{\alpha,\beta,\lambda},
+    \qquad
+    R_p^{\alpha,\beta,\lambda}
+    :=
+    \left|
+    \frac{2p+\lambda-\beta}
+    {2p+2+\lambda+\beta}
+    \right|.
+\]
+Then
+\[
+    0<\rho_{\rm reg}<1,
+\]
+and for all sufficiently large $M$,
+\[
+    \left\|
+    f-\pi_M^{\alpha,\beta,\lambda}f
+    \right\|_{\alpha,\lambda}
+    \le
+    C_{\rm reg}
+    M^{\frac{\alpha+1}{2}+k}
+    \rho_{\rm reg}^M .
+\]
+\end{proposition}
+
+\begin{proof}
+Since
+\[
+    f(x)
+    =
+    \sum_{j=0}^{J_a}a_jx^j
+    +
+    \sum_{j=0}^{J_b}b_jx^{r+j}L(x)^k,
+\]
+we have, by the triangle inequality,
+\[
+\begin{aligned}
+    \left\|
+    f-\pi_M^{\alpha,\beta,\lambda}f
+    \right\|_{\alpha,\lambda}
+    &\le
+    \sum_{j=0}^{J_a}|a_j|
+    \left\|
+    x^j-\pi_M^{\alpha,\beta,\lambda}x^j
+    \right\|_{\alpha,\lambda}
+    \\
+    &\quad+
+    \sum_{j=0}^{J_b}|b_j|
+    \left\|
+    x^{r+j}L(x)^k
+    -
+    \pi_M^{\alpha,\beta,\lambda}
+    \bigl(x^{r+j}L(x)^k\bigr)
+    \right\|_{\alpha,\lambda}.
+\end{aligned}
+\]
+Applying Lemma~\ref{lem:single-term} to each term gives
+\[
+    \left\|
+    f-\pi_M^{\alpha,\beta,\lambda}f
+    \right\|_{\alpha,\lambda}
+    \le
+    C_{\rm reg}
+    M^{\frac{\alpha+1}{2}+k}
+    \rho_{\rm reg}^M .
+\]
+Since the set $\mathcal P$ is finite and $\beta>\lambda$, one has
+\[
+    R_p^{\alpha,\beta,\lambda}<1
+    \qquad\text{for each }p\in\mathcal P,
+\]
+hence $\rho_{\rm reg}<1$.
+\end{proof}
+
+%------------------------------------------------------------
+\subsection{The Fourier truncation term}
+
+For the truncation estimate, define
+\[
+    \eta:=\frac{\beta+\lambda}{2}.
+\]
+For each $n\ge 0$, define the GLOF testing kernel
+\[
+    W_n^{\alpha,\beta,\lambda}(x)
+    :=
+    \mathcal S_n^{(\alpha,\beta,\lambda)}(x)
+    \chi_{\alpha,\lambda}(x).
+\]
+Equivalently,
+\[
+    W_n^{\alpha,\beta,\lambda}(x)
+    =
+    x^\eta
+    L(x)^\alpha
+    L_n^{(\alpha)}\bigl((\beta+1)L(x)\bigr).
+\]
+
+Let $d\in\mathbb N$ satisfy
+\[
+    d<1+\min\{\alpha,\eta\}.
+\]
+Define
+\[
+    A_{n,d}^{\alpha,\beta,\lambda}
+    :=
+    \left\|
+    \frac{d^d}{dx^d}
+    W_n^{\alpha,\beta,\lambda}
+    \right\|_{L^1(0,1)},
+\]
+and
+\[
+    \mathcal K_{M,d}^{\alpha,\beta,\lambda}
+    :=
+    \left(
+    \sum_{n=0}^M
+    \frac{
+    \left(A_{n,d}^{\alpha,\beta,\lambda}\right)^2
+    }{
+    \gamma_n^{(\alpha,\beta)}
+    }
+    \right)^{1/2}.
+\]
+
+%------------------------------------------------------------
+\begin{lemma}[Oscillatory kernel estimate]
+\label{lem:kernel-estimate}
+Let
+\[
+    K_{\ell n}
+    :=
+    \int_0^1
+    e^{2\pi i\ell x}
+    W_n^{\alpha,\beta,\lambda}(x)\,dx,
+    \qquad
+    \ell\ne 0.
+\]
+If
+\[
+    d<1+\min\{\alpha,\eta\},
+    \qquad
+    \eta=\frac{\beta+\lambda}{2},
+\]
+then
+\[
+    |K_{\ell n}|
+    \le
+    \frac{
+    A_{n,d}^{\alpha,\beta,\lambda}
+    }{
+    (2\pi|\ell|)^d
+    }.
+\]
+\end{lemma}
+
+\begin{proof}
+Near $x=0$,
+\[
+    W_n^{\alpha,\beta,\lambda}(x)
+    =
+    O\bigl(x^\eta L(x)^{\alpha+n}\bigr),
+\]
+and near $x=1$,
+\[
+    W_n^{\alpha,\beta,\lambda}(x)
+    =
+    O\bigl((1-x)^\alpha\bigr).
+\]
+More generally, for $0\le j\le d-1$,
+\[
+    \frac{d^j}{dx^j}
+    W_n^{\alpha,\beta,\lambda}(x)
+    \to 0
+    \qquad
+    \text{as }x\to 0^+\text{ and }x\to 1^-,
+\]
+because
+\[
+    j\le d-1<\eta,
+    \qquad
+    j\le d-1<\alpha.
+\]
+Therefore integration by parts $d$ times produces no boundary terms:
+\[
+    K_{\ell n}
+    =
+    \frac{(-1)^d}{(2\pi i\ell)^d}
+    \int_0^1
+    e^{2\pi i\ell x}
+    \frac{d^d}{dx^d}
+    W_n^{\alpha,\beta,\lambda}(x)\,dx .
+\]
+Taking absolute values yields
+\[
+    |K_{\ell n}|
+    \le
+    \frac{1}{(2\pi|\ell|)^d}
+    \left\|
+    \frac{d^d}{dx^d}
+    W_n^{\alpha,\beta,\lambda}
+    \right\|_{L^1(0,1)}
+    =
+    \frac{
+    A_{n,d}^{\alpha,\beta,\lambda}
+    }{
+    (2\pi|\ell|)^d
+    }.
+\]
+\end{proof}
+
+%------------------------------------------------------------
+\begin{lemma}[A computable upper bound for $A_{n,d}^{\alpha,\beta,\lambda}$]
+\label{lem:A-bound}
+Let
+\[
+    b_{n,j}^{(\alpha)}
+    :=
+    \frac{(-1)^j}{j!}
+    \binom{n+\alpha}{n-j},
+    \qquad
+    0\le j\le n.
+\]
+Define coefficients $P_{d,h}(\eta,s)$ recursively by
+\[
+    P_{0,0}(\eta,s)=1,
+\]
+\[
+    P_{d,h}(\eta,s)=0
+    \qquad
+    \text{if }h<0\text{ or }h>d,
+\]
+and
+\[
+    P_{d+1,h}(\eta,s)
+    =
+    (\eta-d)P_{d,h}(\eta,s)
+    -
+    (s-h+1)P_{d,h-1}(\eta,s).
+\]
+Then
+\[
+\begin{aligned}
+    A_{n,d}^{\alpha,\beta,\lambda}
+    \le
+    \mathfrak A_{n,d}^{\alpha,\beta,\lambda},
+\end{aligned}
+\]
+where
+\[
+\boxed{
+\begin{aligned}
+    \mathfrak A_{n,d}^{\alpha,\beta,\lambda}
+    &:=
+    \sum_{j=0}^n
+    \left|b_{n,j}^{(\alpha)}\right|
+    (\beta+1)^j
+    \sum_{h=0}^d
+    \left|P_{d,h}(\eta,\alpha+j)\right|
+    \frac{
+    \Gamma(\alpha+j-h+1)
+    }{
+    (\eta-d+1)^{\alpha+j-h+1}
+    } .
+\end{aligned}
+}
+\]
+Consequently,
+\[
+    \mathcal K_{M,d}^{\alpha,\beta,\lambda}
+    \le
+    \left(
+    \sum_{n=0}^M
+    \frac{
+    \left(
+    \mathfrak A_{n,d}^{\alpha,\beta,\lambda}
+    \right)^2
+    }{
+    \gamma_n^{(\alpha,\beta)}
+    }
+    \right)^{1/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Using the Laguerre expansion
+\[
+    L_n^{(\alpha)}(z)
+    =
+    \sum_{j=0}^n
+    \frac{(-1)^j}{j!}
+    \binom{n+\alpha}{n-j}
+    z^j,
+\]
+we obtain
+\[
+    W_n^{\alpha,\beta,\lambda}(x)
+    =
+    \sum_{j=0}^n
+    b_{n,j}^{(\alpha)}
+    (\beta+1)^j
+    x^\eta L(x)^{\alpha+j}.
+\]
+A direct induction gives
+\[
+    \frac{d^d}{dx^d}
+    \bigl[x^\eta L(x)^s\bigr]
+    =
+    x^{\eta-d}
+    \sum_{h=0}^d
+    P_{d,h}(\eta,s)L(x)^{s-h}.
+\]
+Therefore
+\[
+\begin{aligned}
+    A_{n,d}^{\alpha,\beta,\lambda}
+    &\le
+    \sum_{j=0}^n
+    \left|b_{n,j}^{(\alpha)}\right|
+    (\beta+1)^j
+    \sum_{h=0}^d
+    \left|P_{d,h}(\eta,\alpha+j)\right|
+    \int_0^1
+    x^{\eta-d}
+    L(x)^{\alpha+j-h}\,dx .
+\end{aligned}
+\]
+Since
+\[
+    d<\eta+1,
+    \qquad
+    d<\alpha+1,
+\]
+the integral is finite and equals
+\[
+    \int_0^1
+    x^{\eta-d}
+    L(x)^{\alpha+j-h}\,dx
+    =
+    \frac{
+    \Gamma(\alpha+j-h+1)
+    }{
+    (\eta-d+1)^{\alpha+j-h+1}
+    }.
+\]
+Substitution gives the claimed bound.
+\end{proof}
+
+%------------------------------------------------------------
+\subsection{Main estimate}
+
+\begin{theorem}[Weighted $L^2$ Fourier--GLOF post-processing error]
+\label{thm:main-L2}
+Let Assumption~\ref{ass:data} hold. Let
+\[
+    \alpha,\beta>-1,
+    \qquad
+    \lambda>-1,
+    \qquad
+    \eta=\frac{\beta+\lambda}{2}.
+\]
+Let $d\in\mathbb N$ satisfy
+\[
+    d<1+\min\{\alpha,\eta\}.
+\]
+Then
+\[
+\boxed{
+\begin{aligned}
+    &
+    \left\|
+    f-\pi_M^{\alpha,\beta,\lambda}
+    \bigl(f_N^{\rm F}\bigr)
+    \right\|_{\alpha,\lambda}^2
+    \\
+    &\qquad
+    =
+    \left\|
+    f-\pi_M^{\alpha,\beta,\lambda}f
+    \right\|_{\alpha,\lambda}^2
+    +
+    \left\|
+    \pi_M^{\alpha,\beta,\lambda}
+    \bigl(f-f_N^{\rm F}\bigr)
+    \right\|_{\alpha,\lambda}^2 .
+\end{aligned}
+}
+\]
+Moreover,
+\[
+\boxed{
+    \left\|
+    \pi_M^{\alpha,\beta,\lambda}
+    \bigl(f-f_N^{\rm F}\bigr)
+    \right\|_{\alpha,\lambda}
+    \le
+    \frac{
+    2B_f
+    }{
+    d(2\pi)^d
+    }
+    N^{-d}
+    \mathcal K_{M,d}^{\alpha,\beta,\lambda}.
+}
+\]
+Consequently, if Assumption~\ref{ass:regularization} holds, then
+\[
+\boxed{
+\begin{aligned}
+    &
+    \left\|
+    f-\pi_M^{\alpha,\beta,\lambda}
+    \bigl(f_N^{\rm F}\bigr)
+    \right\|_{\alpha,\lambda}
+    \\
+    &\qquad
+    \le
+    \mathcal R_M
+    +
+    \frac{
+    2B_f
+    }{
+    d(2\pi)^d
+    }
+    N^{-d}
+    \mathcal K_{M,d}^{\alpha,\beta,\lambda}.
+\end{aligned}
+}
+\]
+If, in addition, the finite-expansion assumption of
+Proposition~\ref{prop:finite-reg} holds, then
+\[
+\boxed{
+\begin{aligned}
+    &
+    \left\|
+    f-\pi_M^{\alpha,\beta,\lambda}
+    \bigl(f_N^{\rm F}\bigr)
+    \right\|_{\alpha,\lambda}
+    \\
+    &\qquad
+    \le
+    C_{\rm reg}
+    M^{\frac{\alpha+1}{2}+k}
+    \rho_{\rm reg}^M
+    +
+    \frac{
+    2B_f
+    }{
+    d(2\pi)^d
+    }
+    N^{-d}
+    \mathcal K_{M,d}^{\alpha,\beta,\lambda}.
+\end{aligned}
+}
+\]
+\end{theorem}
+
+\begin{proof}
+Let
+\[
+    V_M
+    :=
+    V_M^{\alpha,\beta,\lambda}.
+\]
+Since
+\[
+    \pi_M^{\alpha,\beta,\lambda}f\in V_M,
+\]
+and $\pi_M^{\alpha,\beta,\lambda}$ is the weighted $L^2$-orthogonal projection,
+we have
+\[
+    f-\pi_M^{\alpha,\beta,\lambda}f
+    \perp_{\alpha,\lambda}
+    V_M.
+\]
+On the other hand,
+\[
+    \pi_M^{\alpha,\beta,\lambda}
+    \bigl(f-f_N^{\rm F}\bigr)
+    \in V_M.
+\]
+Therefore
+\[
+    f-\pi_M^{\alpha,\beta,\lambda}
+    \bigl(f_N^{\rm F}\bigr)
+    =
+    \bigl(f-\pi_M^{\alpha,\beta,\lambda}f\bigr)
+    +
+    \pi_M^{\alpha,\beta,\lambda}
+    \bigl(f-f_N^{\rm F}\bigr)
+\]
+is an orthogonal decomposition in $L^2_{\chi_{\alpha,\lambda}}(0,1)$.
+Hence the Pythagorean identity follows:
+\[
+\begin{aligned}
+    &
+    \left\|
+    f-\pi_M^{\alpha,\beta,\lambda}
+    \bigl(f_N^{\rm F}\bigr)
+    \right\|_{\alpha,\lambda}^2
+    \\
+    &\qquad
+    =
+    \left\|
+    f-\pi_M^{\alpha,\beta,\lambda}f
+    \right\|_{\alpha,\lambda}^2
+    +
+    \left\|
+    \pi_M^{\alpha,\beta,\lambda}
+    \bigl(f-f_N^{\rm F}\bigr)
+    \right\|_{\alpha,\lambda}^2 .
+\end{aligned}
+\]
+
+It remains to estimate the second term. Set
+\[
+    e_N(x):=f(x)-f_N^{\rm F}(x).
+\]
+Then
+\[
+    \pi_M^{\alpha,\beta,\lambda}e_N
+    =
+    \sum_{n=0}^M
+    \varepsilon_{n,N}
+    \mathcal S_n^{(\alpha,\beta,\lambda)}(x),
+\]
+where
+\[
+    \varepsilon_{n,N}
+    =
+    \frac{1}{\gamma_n^{(\alpha,\beta)}}
+    \int_0^1
+    e_N(x)
+    \mathcal S_n^{(\alpha,\beta,\lambda)}(x)
+    \chi_{\alpha,\lambda}(x)\,dx .
+\]
+Using
+\[
+    e_N(x)
+    =
+    \sum_{|\ell|>N}c_\ell e^{2\pi i\ell x}
+\]
+in the $L^2$ sense, we obtain
+\[
+    \varepsilon_{n,N}
+    =
+    \frac{1}{\gamma_n^{(\alpha,\beta)}}
+    \sum_{|\ell|>N}
+    c_\ell K_{\ell n},
+\]
+with
+\[
+    K_{\ell n}
+    =
+    \int_0^1
+    e^{2\pi i\ell x}
+    W_n^{\alpha,\beta,\lambda}(x)\,dx .
+\]
+By Lemma~\ref{lem:kernel-estimate},
+\[
+    |K_{\ell n}|
+    \le
+    \frac{
+    A_{n,d}^{\alpha,\beta,\lambda}
+    }{
+    (2\pi|\ell|)^d
+    }.
+\]
+By Assumption~\ref{ass:data},
+\[
+    |c_\ell|\le \frac{B_f}{|\ell|},
+    \qquad \ell\ne 0.
+\]
+Thus
+\[
+\begin{aligned}
+    |\varepsilon_{n,N}|
+    &\le
+    \frac{1}{\gamma_n^{(\alpha,\beta)}}
+    \sum_{|\ell|>N}
+    |c_\ell|
+    |K_{\ell n}|
+    \\
+    &\le
+    \frac{
+    B_f A_{n,d}^{\alpha,\beta,\lambda}
+    }{
+    (2\pi)^d
+    \gamma_n^{(\alpha,\beta)}
+    }
+    \sum_{|\ell|>N}
+    |\ell|^{-d-1}.
+\end{aligned}
+\]
+Since
+\[
+    \sum_{|\ell|>N}
+    |\ell|^{-d-1}
+    =
+    2\sum_{\ell=N+1}^\infty \ell^{-d-1}
+    \le
+    \frac{2}{d}N^{-d},
+\]
+we have
+\[
+    |\varepsilon_{n,N}|
+    \le
+    \frac{
+    2B_f
+    }{
+    d(2\pi)^d
+    }
+    N^{-d}
+    \frac{
+    A_{n,d}^{\alpha,\beta,\lambda}
+    }{
+    \gamma_n^{(\alpha,\beta)}
+    }.
+\]
+Using the GLOF orthogonality,
+\[
+\begin{aligned}
+    \left\|
+    \pi_M^{\alpha,\beta,\lambda}e_N
+    \right\|_{\alpha,\lambda}^2
+    &=
+    \sum_{n=0}^M
+    \gamma_n^{(\alpha,\beta)}
+    |\varepsilon_{n,N}|^2
+    \\
+    &\le
+    \left(
+    \frac{
+    2B_f
+    }{
+    d(2\pi)^d
+    }
+    N^{-d}
+    \right)^2
+    \sum_{n=0}^M
+    \frac{
+    \left(A_{n,d}^{\alpha,\beta,\lambda}\right)^2
+    }{
+    \gamma_n^{(\alpha,\beta)}
+    }.
+\end{aligned}
+\]
+Therefore
+\[
+    \left\|
+    \pi_M^{\alpha,\beta,\lambda}
+    \bigl(f-f_N^{\rm F}\bigr)
+    \right\|_{\alpha,\lambda}
+    \le
+    \frac{
+    2B_f
+    }{
+    d(2\pi)^d
+    }
+    N^{-d}
+    \mathcal K_{M,d}^{\alpha,\beta,\lambda}.
+\]
+Combining this truncation estimate with
+Assumption~\ref{ass:regularization} gives the general bound.
+If Proposition~\ref{prop:finite-reg} is applicable, substituting its estimate for
+$\mathcal R_M$ gives the final stated inequality.
+\end{proof}
+
+%------------------------------------------------------------
+\subsection{Parameter-dependent form}
+
+The previous theorem keeps all parameters explicit. Therefore, for any parameter choice
+\[
+    M=M_N,
+    \qquad
+    \alpha=\alpha_N,
+    \qquad
+    \beta=\beta_N,
+    \qquad
+    \lambda=\lambda_N,
+\]
+and for any integer
+\[
+    d_N<1+\min\left\{
+    \alpha_N,\frac{\beta_N+\lambda_N}{2}
+    \right\},
+\]
+one obtains
+\[
+\boxed{
+\begin{aligned}
+    &
+    \left\|
+    f-\pi_{M_N}^{\alpha_N,\beta_N,\lambda_N}
+    \bigl(f_N^{\rm F}\bigr)
+    \right\|_{\alpha_N,\lambda_N}
+    \\
+    &\qquad
+    \le
+    \mathcal R_{M_N}^{\alpha_N,\beta_N,\lambda_N}
+    +
+    \frac{
+    2B_f
+    }{
+    d_N(2\pi)^{d_N}
+    }
+    N^{-d_N}
+    \mathcal K_{M_N,d_N}^{\alpha_N,\beta_N,\lambda_N}.
+\end{aligned}
+}
+\]
+This identity shows explicitly that the truncation term is controlled by
+\[
+    N^{-d_N}
+    \mathcal K_{M_N,d_N}^{\alpha_N,\beta_N,\lambda_N},
+\]
+where
+\[
+    d_N<1+\alpha_N
+    \quad\text{and}\quad
+    d_N<
+    1+\frac{\beta_N+\lambda_N}{2}.
+\]
+Hence increasing $\alpha_N$ improves the vanishing of the testing kernel at
+$x=1$, while increasing $(\beta_N+\lambda_N)/2$ improves the vanishing at
+$x=0$. The singularity-matching condition is
+\[
+    \frac{\beta_N-\lambda_N}{2}\approx r.
+\]
+A natural parameterization is therefore
+\[
+    \lambda_N=\ell N+\lambda_0,
+    \qquad
+    \beta_N=\lambda_N+2r,
+    \qquad
+    \alpha_N=aN,
+    \qquad
+    M_N=\sigma N,
+\]
+with positive constants $a,\ell,\sigma$ and with
+\[
+    d_N=\lfloor \theta N\rfloor,
+    \qquad
+    0<\theta<\min\{a,\ell\}.
+\]
+The remaining nontrivial task is to prove that, under this scaling,
+\[
+    \frac{
+    2B_f
+    }{
+    d_N(2\pi)^{d_N}
+    }
+    N^{-d_N}
+    \mathcal K_{M_N,d_N}^{\alpha_N,\beta_N,\lambda_N}
+\]
+does not grow faster than the damping factor
+$N^{-d_N}(2\pi)^{-d_N}$. This is the GLOF analogue of the
+Fourier--Gegenbauer truncation-error estimate.
+
+%------------------------------------------------------------
+\begin{remark}[About standard unweighted $L^2(0,1)$]
+If one takes $\alpha=\lambda=0$, then
+\[
+    \|\cdot\|_{\alpha,\lambda}=\|\cdot\|_{L^2(0,1)}.
+\]
+In this case the projection is orthogonal in the standard $L^2$ norm.
+However, the endpoint-vanishing condition
+\[
+    d<1+\min\left\{\alpha,\frac{\beta+\lambda}{2}\right\}
+\]
+does not allow any positive integer $d$ solely through the above
+boundary-vanishing argument, because $\alpha=0$ gives no vanishing at
+$x=1$. Thus the present high-order integration-by-parts estimate is
+naturally a weighted $L^2_{\chi_{\alpha,\lambda}}$ estimate with
+$\alpha>0$. In the standard $L^2$ setting, one still has the stability
+bound
+\[
+    \left\|
+    \pi_M^{0,\beta,0}
+    \bigl(f-f_N^{\rm F}\bigr)
+    \right\|_{L^2(0,1)}
+    \le
+    \|f-f_N^{\rm F}\|_{L^2(0,1)},
+\]
+but this only gives the usual Fourier-tail rate and does not by itself
+produce an exponential truncation estimate.
+\end{remark}
+\end{document}

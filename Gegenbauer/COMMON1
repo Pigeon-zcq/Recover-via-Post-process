@@ -1,0 +1,22 @@
+
+      implicit none
+
+      real :: f,x,y,bet,p,q
+      real :: pi,hhf,hg,a,b
+      real :: cnl,xx,gam,gt,yy,mpsml
+      complex :: ci, hf
+      integer :: nt
+
+      common /int1/ f(-2000:2000),x(-2000:2000),y(-2000:2000)
+      common /int2/ b,bet,p,q,pi,mpsml,hhf(0:2000),hg(0:2000)
+      common /c1/ ci,hf(-2000:2000)
+      common /c2/ nt
+      common /ge/ cnl(0:1000),xx(0:1000),gam(800),gt(0:800),yy(0:1000)
+
+!      parameter :: Size=1280
+!      parameter(Size=1280)
+!      common /int1/ f(-Size:Size),x(-Size:Size),y(-Size:Size),hhf(0:Size),hg(0:Size)
+!      common /int2/ b,bet,p,q,pi
+!      common /c1/ ci,hf(-Size:Size)
+!      common /c2/ nt
+!      common /ge/ cnl(0:1000),xx(0:1000),gam(800),gt(0:800),yy(0:1000)
