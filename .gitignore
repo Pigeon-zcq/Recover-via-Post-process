@@ -1,0 +1,54 @@
+# --- OS / 编辑器杂项 ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+*~
+*.swp
+*.swo
+
+# --- MATLAB ---
+*.asv
+# 若用 Simulink / 代码生成，可取消下面注释：
+# slprj/
+# *.slxc
+
+*.html
+
+# 大型结果文件若不想进仓库，可按需取消注释（小 .mat 常仍需要提交）：
+*.mat
+*.dat
+*.msh
+
+# --- LaTeX: 编译产生的辅助文件（保留 .tex / .pdf）---
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.fmt
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex
+*.synctex.gz
+*.synctex(busy)
+*.toc
+*.nav
+*.snm
+*.vrb
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.loa
+*.xdv
+*.dvi
