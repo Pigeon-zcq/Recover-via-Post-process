@@ -12,7 +12,7 @@ function hf = FourierGalerkinTransport(N, p, q, Tfinal, cfl)
 % (mass matrix from the operator -x*d/dx, see Fortran source).
 %
 % An exponential filter sigma_k = exp(-16*log(10)*(k/N)^r) is applied
-% at each RK4 step to stabilise the computation.
+% after every RK4 step to stabilise the computation (matches Fortran reference).
 %
 % Inputs:
 %   N      - Fourier truncation order (2N+1 modes)
@@ -60,9 +60,9 @@ function hf = FourierGalerkinTransport(N, p, q, Tfinal, cfl)
         ak3 = (AM * (ak + 0.5*dt*ak2).').' ;
         ak4 = (AM * (ak +     dt*ak3).').' ;
         ak  = ak + (dt/6) * (ak1 + 2*ak2 + 2*ak3 + ak4);
+        ak  = ak .* sigma;   % filter every step (matches Fortran reference)
         t   = t + dt;
     end
 
-    % Apply filter once at final time (not per-step, to avoid over-damping)
-    hf = ak .* sigma;
+    hf = ak;
 end

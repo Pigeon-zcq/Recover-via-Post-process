@@ -27,12 +27,12 @@ fprintf('N=40, lam=1, m=10\n');
 N=40; lam=1; m=10; nzn=N; nt=3*N;
 gt = compute_gt(lam, max(m,nt)+1);
 
-% Version 1: filter once at end (current state)
+% Version 1: filter every step (current state, matches Fortran)
 hf1 = FourierGalerkinTransport(N, p, q, Tfinal, 0.5);
 hg1 = gcoe(hf1, N, m, lam, bet, a_sub, b_sub, gt, nt);
 [u1, xx1] = gegenbauer_reconstruct(hg1, m, lam, bet, a_sub, b_sub, nzn, gt);
 ex1 = arrayfun(f_et, xx1);
-fprintf('Filter at end:   hg(0:3)=[%.4f %.4f %.4f %.4f], err=%.4e\n', ...
+fprintf('Filter per step: hg(0:3)=[%.4f %.4f %.4f %.4f], err=%.4e\n', ...
     hg1(1),hg1(2),hg1(3),hg1(4), max(abs(u1-ex1)));
 
 % Version 2: no filter at all
