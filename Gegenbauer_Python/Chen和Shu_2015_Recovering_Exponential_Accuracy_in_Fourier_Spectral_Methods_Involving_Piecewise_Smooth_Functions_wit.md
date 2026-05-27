@@ -695,7 +695,7 @@ $$
 \lambda = \frac {1}{8} N, \quad m = \frac {1}{3 2} N. \tag {6.4}
 $$
 
-In Fig. 1b, we show the errors in the logarithm scale, for N 40, 80, 160, 320 and 640. In Table 2, we show the maximum errors of the reconstruction over $x \in [ - 1$ , 1] with both ways to choose parameters, for each N . We again clearly find out that the error is exponentially decaying with linear choice. 
+In Fig. 1b, we show the errors in the logarithm scale, for N 40, 80, 160, 320 and 640. In Table 2, we show the maximum errors of the reconstruction over $x \in [ - 1,1]$ ,  with both ways to choose parameters, for each N . We again clearly find out that the error is exponentially decaying with linear choice. 
 
 ![image](https://cdn-mineru.openxlab.org.cn/result/2026-05-27/051a6ce5-4596-4416-8f09-ffb550db0f85/bdfa0b669cb6e4dae3425291b1ff38a61b6946e630a4bb7d186717afdf2efc11.jpg)
 

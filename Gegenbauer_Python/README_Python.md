@@ -11,6 +11,8 @@ Fortran Gegenbauer reconstruction programs.
   path.
 - `validate_examples.py`: compares Chen-Shu 2015 Examples 6.1 and 6.2 against
   the published linear-choice maximum-error table.
+- `reproduce_chen_shu_2015_examples.py`: reproduces Chen-Shu 2015 Examples 6.1
+  and 6.2 tables plus Fig. 1 pointwise-error plots.
 - `test_reconstruction.py`: lightweight regression tests.
 
 ## Fortran mapping
@@ -37,6 +39,13 @@ Validate the published linear-choice rows for Examples 6.1 and 6.2:
 
 ```bash
 python Gegenbauer_Python/validate_examples.py --example 6.1 6.2 --N 40 80 --dps 60
+```
+
+Generate reproduction tables and Fig. 1 images for Examples 6.1 and 6.2:
+
+```bash
+python Gegenbauer_Python/reproduce_chen_shu_2015_examples.py --quick --dps 60
+python Gegenbauer_Python/reproduce_chen_shu_2015_examples.py --full --dps 80
 ```
 
 Run a single paper example:

@@ -1,0 +1,216 @@
+{
+  "main": {
+    "id": "1ab92bb2fdeffa21",
+    "type": "split",
+    "children": [
+      {
+        "id": "db532006c3cc84db",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9b332d6db464a9c0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Gegenbauer_Python/Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6662415b03d081cd",
+    "type": "split",
+    "children": [
+      {
+        "id": "919cfa97bb370408",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bebcf5b84c945f34",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "59a4edbf6ef72fa4",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "6776ac48bd7e7121",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "a3a7531a68f63f3c",
+    "type": "split",
+    "children": [
+      {
+        "id": "35b4d18b63910de6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "32e920efaeef5175",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Gegenbauer_Python/Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit 的反向链接列表"
+            }
+          },
+          {
+            "id": "b5f4c21c899f1159",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Gegenbauer_Python/Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit 的出链列表"
+            }
+          },
+          {
+            "id": "70152551f76963fc",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "34b578385fc4ea86",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "3a09566b8a4933a9",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Gegenbauer_Python/Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "9b332d6db464a9c0",
+  "lastOpenFiles": [
+    "Gegenbauer_Python/reproductions/chen_shu_2015_full/summary.json",
+    "Gegenbauer_Python/reproductions/chen_shu_2015_full/figure_1_examples_6_1_6_2.png",
+    "Gegenbauer_Python/reproductions/chen_shu_2015_full/figure_1b_example_6_2.png",
+    "Gegenbauer_Python/reproductions/chen_shu_2015_full/figure_1a_example_6_1.png",
+    "Gegenbauer_Python/reproductions/chen_shu_2015_full/pointwise_errors_example_6_2.csv",
+    "Gegenbauer_Python/reproductions/chen_shu_2015_full/table_2_example_6_2.md",
+    "Gegenbauer_Python/reproductions/chen_shu_2015_full/table_2_example_6_2.csv",
+    "Gegenbauer_Python/reproductions/chen_shu_2015_full/pointwise_errors_example_6_1.csv",
+    "Gegenbauer_Python/reproductions/chen_shu_2015_full/table_1_example_6_1.md",
+    "Gegenbauer_Python/reproductions/chen_shu_2015_full/table_1_example_6_1.csv",
+    "Gegenbauer_Python/reproductions/chen_shu_2015_full",
+    "Gegenbauer_Python/__pycache__/reproduce_chen_shu_2015_examples.cpython-313.pyc",
+    "Gegenbauer_Python/__pycache__/gegenbauer_reconstruction.cpython-313.pyc",
+    "Gegenbauer_Python/__pycache__/__init__.cpython-313.pyc",
+    "Gegenbauer_Python/__pycache__",
+    "Gegenbauer_Python/test_eg.ipynb",
+    "Gegenbauer_Python/reproductions/chen_shu_2015/figure_1b_example_6_2.png",
+    "Gegenbauer_Python/reproductions/chen_shu_2015/figure_1a_example_6_1.png",
+    "Gegenbauer_Python/reproductions/chen_shu_2015/figure_1_examples_6_1_6_2.png",
+    "Gegenbauer_Python/reproductions/chen_shu_2015/figure_12_example_6_2.png",
+    "Gegenbauer_Python/reproductions/chen_shu_2015/figure_11_example_6_1.png",
+    "Gegenbauer_Python/reproductions/chen_shu_2015/table_2_example_6_2.md",
+    "Gegenbauer_Python/reproductions/chen_shu_2015/table_1_example_6_1.md",
+    "Gegenbauer_Python/reproductions/test_quick_62/figure_12_example_6_2.png",
+    "Gegenbauer_Python/reproductions/test_quick_62/table_2_example_6_2.md",
+    "Gegenbauer_Python/reproductions/test_quick/figure_11_example_6_1.png",
+    "Gegenbauer_Python/reproductions/test_quick/table_1_example_6_1.md"
+  ]
+}

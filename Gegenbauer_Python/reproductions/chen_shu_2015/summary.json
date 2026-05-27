@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "paper_md": "/Users/zcq/PaperCode/Recover/Gegenbauer_Python/Chen\u548cShu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit.md",
+    "N_values": [
+      40,
+      80
+    ],
+    "dps": 60,
+    "method": "gauss3",
+    "panels": null,
+    "nzn": null,
+    "search_optimal": false
+  },
+  "tables": {
+    "6.1": [
+      {
+        "N": 40,
+        "linear_lambda": 2,
+        "linear_m": 1,
+        "computed_linear_Linf": "0.59104992",
+        "paper_linear_Linf": "0.591",
+        "linear_ratio": "1.0000845",
+        "computed_order": "",
+        "paper_order": "",
+        "computed_linear_L1_mean": "0.25542157",
+        "linear_x_at_max": "-1.0",
+        "paper_opt_lambda": 18,
+        "paper_opt_m": 8,
+        "computed_Linf_at_paper_opt_pair": "0.0012064095",
+        "paper_opt_Linf": "0.00121",
+        "paper_opt_pair_ratio": "0.99703266"
+      },
+      {
+        "N": 80,
+        "linear_lambda": 5,
+        "linear_m": 3,
+        "computed_linear_Linf": "0.29526459",
+        "paper_linear_Linf": "0.295",
+        "linear_ratio": "1.0008969",
+        "computed_order": "1.0013",
+        "paper_order": "1.00",
+        "computed_linear_L1_mean": "0.067132012",
+        "linear_x_at_max": "1.0",
+        "paper_opt_lambda": 40,
+        "paper_opt_m": 12,
+        "computed_Linf_at_paper_opt_pair": "5.250084e-5",
+        "paper_opt_Linf": "5.25e-5",
+        "paper_opt_pair_ratio": "1.000016"
+      }
+    ],
+    "6.2": [
+      {
+        "N": 40,
+        "linear_lambda": 5,
+        "linear_m": 1,
+        "computed_linear_Linf": "0.71317653",
+        "paper_linear_Linf": "0.713",
+        "linear_ratio": "1.0002476",
+        "computed_order": "",
+        "paper_order": "",
+        "computed_linear_L1_mean": "0.38405365",
+        "linear_x_at_max": "0.91824962",
+        "paper_opt_lambda": 12,
+        "paper_opt_m": 5,
+        "computed_Linf_at_paper_opt_pair": "0.18265432",
+        "paper_opt_Linf": "0.183",
+        "paper_opt_pair_ratio": "0.99811101"
+      },
+      {
+        "N": 80,
+        "linear_lambda": 10,
+        "linear_m": 2,
+        "computed_linear_Linf": "0.36448913",
+        "paper_linear_Linf": "0.364",
+        "linear_ratio": "1.0013438",
+        "computed_order": "0.96838",
+        "paper_order": "0.97",
+        "computed_linear_L1_mean": "0.11206984",
+        "linear_x_at_max": "-1.0",
+        "paper_opt_lambda": 33,
+        "paper_opt_m": 7,
+        "computed_Linf_at_paper_opt_pair": "0.019786691",
+        "paper_opt_Linf": "0.0198",
+        "paper_opt_pair_ratio": "0.99932785"
+      }
+    ]
+  }
+}
