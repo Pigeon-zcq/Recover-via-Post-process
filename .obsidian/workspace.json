@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Gegenbauer_Python/Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit.md",
+                "file": "GLOF_Python/code.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit"
+              "title": "code"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Gegenbauer_Python/Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit.md",
+                "file": "GLOF_Python/code.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit 的反向链接列表"
+              "title": "code 的反向链接列表"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Gegenbauer_Python/Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit.md",
+                "file": "GLOF_Python/code.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit 的出链列表"
+              "title": "code 的出链列表"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Gegenbauer_Python/Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit.md",
+                "file": "GLOF_Python/code.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit 的大纲"
+              "title": "code 的大纲"
             }
           }
         ]
@@ -185,22 +185,25 @@
   },
   "active": "9b332d6db464a9c0",
   "lastOpenFiles": [
-    "Gegenbauer_Python/reproductions/chen_shu_2015_full/summary.json",
+    "GLOF_Python/glof_projection_fig5_fig6.ipynb",
+    "GLOF_Python/glof_jupyter_test_sin.ipynb",
+    "GLOF_Python/glof_jupyter_test.ipynb",
+    "GLOF_Python/__pycache__/run_glof_reconstruction.cpython-313.pyc",
+    "GLOF_Python/__pycache__/glof_reconstruction.cpython-313.pyc",
+    "GLOF_Python/__pycache__/test_glof_reconstruction.cpython-313.pyc",
+    "GLOF_Python/__pycache__/__init__.cpython-313.pyc",
+    "GLOF_Python/__pycache__",
+    "GLOF_Python/README.md",
+    "GLOF_Python/test_glof_reconstruction.py",
+    "GLOF_Python/run_glof_reconstruction.py",
+    "GLOF_Python/__init__.py",
+    "Gegenbauer_Python/Chen和Shu_2015_Recovering_Exponential_Accuracy_in_Fourier_Spectral_Methods_Involving_Piecewise_Smooth_Functions_wit.md",
+    "GLOF_Python/code.md",
     "Gegenbauer_Python/reproductions/chen_shu_2015_full/figure_1_examples_6_1_6_2.png",
     "Gegenbauer_Python/reproductions/chen_shu_2015_full/figure_1b_example_6_2.png",
     "Gegenbauer_Python/reproductions/chen_shu_2015_full/figure_1a_example_6_1.png",
-    "Gegenbauer_Python/reproductions/chen_shu_2015_full/pointwise_errors_example_6_2.csv",
     "Gegenbauer_Python/reproductions/chen_shu_2015_full/table_2_example_6_2.md",
-    "Gegenbauer_Python/reproductions/chen_shu_2015_full/table_2_example_6_2.csv",
-    "Gegenbauer_Python/reproductions/chen_shu_2015_full/pointwise_errors_example_6_1.csv",
     "Gegenbauer_Python/reproductions/chen_shu_2015_full/table_1_example_6_1.md",
-    "Gegenbauer_Python/reproductions/chen_shu_2015_full/table_1_example_6_1.csv",
-    "Gegenbauer_Python/reproductions/chen_shu_2015_full",
-    "Gegenbauer_Python/__pycache__/reproduce_chen_shu_2015_examples.cpython-313.pyc",
-    "Gegenbauer_Python/__pycache__/gegenbauer_reconstruction.cpython-313.pyc",
-    "Gegenbauer_Python/__pycache__/__init__.cpython-313.pyc",
-    "Gegenbauer_Python/__pycache__",
-    "Gegenbauer_Python/test_eg.ipynb",
     "Gegenbauer_Python/reproductions/chen_shu_2015/figure_1b_example_6_2.png",
     "Gegenbauer_Python/reproductions/chen_shu_2015/figure_1a_example_6_1.png",
     "Gegenbauer_Python/reproductions/chen_shu_2015/figure_1_examples_6_1_6_2.png",
