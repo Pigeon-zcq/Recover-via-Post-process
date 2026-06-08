@@ -431,6 +431,21 @@ def reconstruct_from_function(
     )
 
 
+@dataclass
+class FourierSolutionResult:
+    n: int
+    q: int
+    max_error: mp.mpf
+    mean_abs_error: mp.mpf
+    x_at_max: mp.mpf
+    x_values: List[mp.mpf]
+    y_values: List[mp.mpf]
+    values: List[mp.mpf]
+    exact: List[mp.mpf]
+    errors: List[mp.mpf]
+    fourier_coefficients: ComplexCoefficients
+
+
 def paper_linear_parameters(example: str, n: int) -> Tuple[int, int, int]:
     """Return ``(p, q, lambda, m)`` for Examples 6.1 and 6.2."""
 
@@ -732,6 +747,49 @@ def fourier_galerkin_transport_coefficients(
     return ak
 
 
+def evaluate_transport_fourier_solution(
+    n: int,
+    *,
+    a: mp.mpf = mp.mpf("-0.5"),
+    b: mp.mpf = mp.zero,
+    q: int = 2,
+    dps: int = DEFAULT_DPS,
+    panels: Optional[int] = None,
+    nzn: Optional[int] = None,
+    coeffs: Optional[Mapping[int, mp.mpc]] = None,
+) -> FourierSolutionResult:
+    """Evaluate the unprocessed Fourier-Galerkin transport solution."""
+
+    set_precision(dps)
+    nzn = int(nzn if nzn is not None else n)
+    coeff_dict = (
+        dict(coeffs)
+        if coeffs is not None
+        else fourier_galerkin_transport_coefficients(n, q=q, panels=panels)
+    )
+    bet = mp.one / q
+    y_values = [mp.cos(mp.pi * i / nzn) for i in range(nzn + 1)]
+    x_values = [transform_y_to_x(y, bet, a, b) for y in y_values]
+    values = [evaluate_fourier_series(coeff_dict, x, n) for x in x_values]
+    exact_func = lambda x: fv_transport_exact(x, mp.one, mp.mpf(q))
+    exact = [exact_func(x) for x in x_values]
+    errors = [abs(u - ex) for u, ex in zip(values, exact)]
+    max_index = max(range(len(errors)), key=lambda i: errors[i])
+    return FourierSolutionResult(
+        n=n,
+        q=q,
+        max_error=errors[max_index],
+        mean_abs_error=mp.fsum(errors) / len(errors),
+        x_at_max=x_values[max_index],
+        x_values=x_values,
+        y_values=y_values,
+        values=values,
+        exact=exact,
+        errors=errors,
+        fourier_coefficients=coeff_dict,
+    )
+
+
 def reconstruct_variable_transport(
     n: int,
     m: int,
@@ -743,13 +801,18 @@ def reconstruct_variable_transport(
     dps: int = DEFAULT_DPS,
     panels: Optional[int] = None,
     nzn: Optional[int] = None,
+    coeffs: Optional[Mapping[int, mp.mpc]] = None,
 ) -> ReconstructionResult:
     """Run the variable-coefficient transport post-processing path."""
 
     set_precision(dps)
     nzn = int(nzn if nzn is not None else n)
-    coeffs = fourier_galerkin_transport_coefficients(n, q=q, panels=panels)
-    hg = gegenbauer_coefficients_from_fourier(coeffs, n, m, lam, q, a, b)
+    coeff_dict = (
+        dict(coeffs)
+        if coeffs is not None
+        else fourier_galerkin_transport_coefficients(n, q=q, panels=panels)
+    )
+    hg = gegenbauer_coefficients_from_fourier(coeff_dict, n, m, lam, q, a, b)
     x_values, y_values, reconstructed = reconstruct_on_y_grid(hg, lam, q, nzn, a, b)
     exact_func = lambda x: fv_transport_exact(x, mp.one, mp.mpf(q))
     exact = [exact_func(x) for x in x_values]
@@ -768,9 +831,64 @@ def reconstruct_variable_transport(
         reconstructed=reconstructed,
         exact=exact,
         errors=errors,
-        fourier_coefficients=coeffs,
+        fourier_coefficients=coeff_dict,
         gegenbauer_coefficients=hg,
     )
+
+
+def find_best_transport_parameters(
+    n: int,
+    *,
+    max_lam: Optional[int] = None,
+    max_m: Optional[int] = None,
+    a: mp.mpf = mp.mpf("-0.5"),
+    b: mp.mpf = mp.zero,
+    q: int = 2,
+    dps: int = DEFAULT_DPS,
+    panels: Optional[int] = None,
+    nzn: Optional[int] = None,
+    coeffs: Optional[Mapping[int, mp.mpc]] = None,
+) -> ParameterSearchResult:
+    """Scan the transport post-processing parameters after one FG solve."""
+
+    set_precision(dps)
+    max_lam = int(max_lam if max_lam is not None else n // 2)
+    max_m = int(max_m if max_m is not None else n // 2)
+    nzn = int(nzn if nzn is not None else n)
+    coeff_dict = (
+        dict(coeffs)
+        if coeffs is not None
+        else fourier_galerkin_transport_coefficients(n, q=q, panels=panels)
+    )
+    y_values = [mp.cos(mp.pi * i / nzn) for i in range(nzn + 1)]
+    x_values = [transform_y_to_x(y, mp.one / q, a, b) for y in y_values]
+    exact = [fv_transport_exact(x, mp.one, mp.mpf(q)) for x in x_values]
+    best: Optional[ParameterSearchResult] = None
+
+    for lam in range(1, max_lam + 1):
+        hg = gegenbauer_coefficients_from_fourier(coeff_dict, n, max_m, lam, q, a, b)
+        reconstructed = [mp.zero] * (nzn + 1)
+        gt = rising_over_factorial(lam, max_m)
+        for m in range(0, max_m + 1):
+            _, cnl = gegenbauer_grid_values(m, nzn, lam, gt)
+            for i in range(nzn + 1):
+                reconstructed[i] += hg[m] * cnl[i]
+            errors = [abs(u - ex) for u, ex in zip(reconstructed, exact)]
+            max_index = max(range(len(errors)), key=lambda i: errors[i])
+            max_error = errors[max_index]
+            if best is None or max_error < best.max_error:
+                best = ParameterSearchResult(
+                    n=n,
+                    q=q,
+                    best_m=m,
+                    best_lam=lam,
+                    max_error=max_error,
+                    mean_abs_error=mp.fsum(errors) / len(errors),
+                    x_at_max=x_values[max_index],
+                )
+    if best is None:
+        raise ValueError("empty parameter search")
+    return best
 
 
 def mp_format(value: mp.mpf, digits: int = 12) -> str:
