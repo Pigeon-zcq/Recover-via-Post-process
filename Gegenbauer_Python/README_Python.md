@@ -20,7 +20,7 @@ Fortran Gegenbauer reconstruction programs.
 - `fs`, `fv` -> `fs_periodic_singularity`, `fv_transport_exact`
 - `transf` -> `transform_y_to_x`, `transform_x_to_y`
 - `getPointValuefromFC` -> `composite_gauss_fourier_coefficients`
-- `gegen`, `gegenP` -> `gegenbauer_grid_values`, `gegenbauer_value`
+- `gegen` -> `gegenbauer_grid_values`
 - `gcoe` -> `gegenbauer_coefficients_from_fourier`
 - `ccoe` -> `collocation_spectral_coefficients`
 - `FourierGalerkinTransport` -> `fourier_galerkin_transport_coefficients`

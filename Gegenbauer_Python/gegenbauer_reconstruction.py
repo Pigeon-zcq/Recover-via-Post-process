@@ -16,7 +16,7 @@ plain Python integers for counters and convert numerical data to ``mp.mpf`` or
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Callable, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
+from typing import Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
 from mpmath import mp
 
@@ -144,24 +144,6 @@ def transform_x_to_y(
     return -1 + mp.power(x - a, bet) / temp
 
 
-def transform_values_y_to_x(
-    y_values: Iterable[mp.mpf],
-    bet: mp.mpf,
-    a: mp.mpf = mp.mpf(-1),
-    b: mp.mpf = mp.mpf(1),
-) -> List[mp.mpf]:
-    return [transform_y_to_x(y, bet, a, b) for y in y_values]
-
-
-def transform_values_x_to_y(
-    x_values: Iterable[mp.mpf],
-    bet: mp.mpf,
-    a: mp.mpf = mp.mpf(-1),
-    b: mp.mpf = mp.mpf(1),
-) -> List[mp.mpf]:
-    return [transform_x_to_y(x, bet, a, b) for x in x_values]
-
-
 def rising_over_factorial(lam: int, max_order: int) -> List[mp.mpf]:
     """Return ``(lambda)_j / j!`` for ``0 <= j <= max_order``."""
 
@@ -170,29 +152,6 @@ def rising_over_factorial(lam: int, max_order: int) -> List[mp.mpf]:
     for j in range(1, max_order + 1):
         gt.append(gt[-1] * (lam_m + j - 1) / j)
     return gt
-
-
-def gegenbauer_value(order: int, lam: int, y: mp.mpf) -> mp.mpf:
-    """Evaluate ``C_order^lam(y)`` using the recurrence in ``gegenP``."""
-
-    y = as_mpf(y)
-    lam_m = mp.mpf(lam)
-    if order == 0:
-        return mp.one
-    if order == 1:
-        return 2 * lam_m * y
-
-    ta = mp.one
-    tb = 2 * lam_m * y
-    tc = mp.zero
-    for j in range(2, order + 1):
-        j_m = mp.mpf(j)
-        tc = 2 * (j_m - 1 + lam_m) * y * tb
-        tc -= (j_m - 2 + 2 * lam_m) * ta
-        tc /= j_m
-        ta = tb
-        tb = tc
-    return tc
 
 
 def gegenbauer_grid_values(
@@ -329,22 +288,6 @@ def gegenbauer_coefficients_from_fourier(
     return hg
 
 
-def reconstruct_value(
-    x: mp.mpf,
-    hg: Sequence[mp.mpf],
-    lam: int,
-    q: int,
-    a: mp.mpf = mp.mpf(-1),
-    b: mp.mpf = mp.mpf(1),
-) -> mp.mpf:
-    bet = mp.one / q
-    y = transform_x_to_y(x, bet, a, b)
-    total = mp.zero
-    for order, coeff in enumerate(hg):
-        total += coeff * gegenbauer_value(order, lam, y)
-    return total
-
-
 def reconstruct_on_y_grid(
     hg: Sequence[mp.mpf],
     lam: int,
@@ -388,49 +331,6 @@ class ReconstructionResult:
     gegenbauer_coefficients: List[mp.mpf]
 
 
-def reconstruct_from_function(
-    func: RealFunction,
-    n: int,
-    m: int,
-    lam: int,
-    q: int,
-    *,
-    a: mp.mpf = mp.mpf(-1),
-    b: mp.mpf = mp.mpf(1),
-    nzn: Optional[int] = None,
-    dps: int = DEFAULT_DPS,
-    fourier_method: str = "gauss3",
-    panels: Optional[int] = None,
-) -> ReconstructionResult:
-    """Full Fourier-coefficient to Gegenbauer reconstruction pipeline."""
-
-    set_precision(dps)
-    nzn = int(n if nzn is None else nzn)
-    coeffs = fourier_coefficients(func, n, method=fourier_method, panels=panels)
-    hg = gegenbauer_coefficients_from_fourier(coeffs, n, m, lam, q, a, b)
-    x_values, y_values, reconstructed = reconstruct_on_y_grid(hg, lam, q, nzn, a, b)
-    exact = [func(x) for x in x_values]
-    errors = [abs(u - ex) for u, ex in zip(reconstructed, exact)]
-    max_index = max(range(len(errors)), key=lambda i: errors[i])
-    mean_abs_error = mp.fsum(errors) / len(errors)
-    return ReconstructionResult(
-        n=n,
-        m=m,
-        lam=lam,
-        q=q,
-        max_error=errors[max_index],
-        mean_abs_error=mean_abs_error,
-        x_at_max=x_values[max_index],
-        x_values=x_values,
-        y_values=y_values,
-        reconstructed=reconstructed,
-        exact=exact,
-        errors=errors,
-        fourier_coefficients=coeffs,
-        gegenbauer_coefficients=hg,
-    )
-
-
 @dataclass
 class FourierSolutionResult:
     n: int
@@ -444,40 +344,6 @@ class FourierSolutionResult:
     exact: List[mp.mpf]
     errors: List[mp.mpf]
     fourier_coefficients: ComplexCoefficients
-
-
-def paper_linear_parameters(example: str, n: int) -> Tuple[int, int, int]:
-    """Return ``(p, q, lambda, m)`` for Examples 6.1 and 6.2."""
-
-    key = example.lower().replace("example", "").replace(".", "").strip()
-    if key in {"61", "6 1"}:
-        return 1, 2, max(1, n // 16), max(1, (3 * n) // 80)
-    if key in {"62", "6 2"}:
-        return 1, 3, max(1, n // 8), max(1, n // 32)
-    raise ValueError("example must be '6.1' or '6.2'")
-
-
-def run_paper_example(
-    example: str,
-    n: int,
-    *,
-    dps: int = DEFAULT_DPS,
-    fourier_method: str = "gauss3",
-    panels: Optional[int] = None,
-    nzn: Optional[int] = None,
-) -> ReconstructionResult:
-    p, q, lam, m = paper_linear_parameters(example, n)
-    return reconstruct_from_function(
-        paper_example_function(p, q),
-        n=n,
-        m=m,
-        lam=lam,
-        q=q,
-        dps=dps,
-        fourier_method=fourier_method,
-        panels=panels,
-        nzn=nzn,
-    )
 
 
 @dataclass
